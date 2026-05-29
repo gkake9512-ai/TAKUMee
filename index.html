@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAKUMee 架電マニュアル</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ffffff;--bg2:#f8f8f6;--bg3:#f0efe9;
+  --text:#1a1a18;--text2:#666660;--text3:#999990;
+  --border:#e0dfd8;--border2:#c8c7c0;
+  --info-bg:#e8f0fd;--info-text:#1a4fa0;--info-border:#b8cef8;
+  --success-bg:#eaf5e8;--success-text:#1a7a20;
+  --warning-bg:#fdf5e0;--warning-text:#8a6000;
+  --danger-bg:#fdeaea;--danger-text:#a01a1a;
+  --radius:10px;--radius-lg:14px;
+}
+body{font-family:'Hiragino Sans','Yu Gothic UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;padding:16px}
+.app{max-width:680px;margin:0 auto;background:var(--bg);border-radius:var(--radius-lg);border:0.5px solid var(--border);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:0.5px solid var(--border);background:var(--bg)}
+.logo{width:38px;height:38px;border-radius:var(--radius);background:var(--info-bg);display:flex;align-items:center;justify-content:center}
+.logo i{font-size:20px;color:var(--info-text)}
+.title-block h1{font-size:16px;font-weight:600;color:var(--text)}
+.title-block p{font-size:12px;color:var(--text3);margin-top:1px}
+.body{padding:16px 20px}
+.mode-tabs{display:flex;gap:6px;margin-bottom:16px}
+.tab{padding:6px 14px;border-radius:var(--radius);border:0.5px solid var(--border2);font-size:13px;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;display:flex;align-items:center;gap:5px}
+.tab.active{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text);font-weight:500}
+.step-nav{display:flex;align-items:center;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.step-dot{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--text3);cursor:pointer;transition:all .15s}
+.step-dot.active{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)}
+.step-dot.done{background:var(--success-bg);border-color:transparent;color:var(--success-text)}
+.step-line{flex:1;height:0.5px;background:var(--border);min-width:10px}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px}
+.card-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.script-box{background:var(--bg2);border-radius:var(--radius);padding:14px;font-size:14px;line-height:1.75;color:var(--text);border-left:3px solid var(--info-border);margin-bottom:12px}
+textarea.script-edit{width:100%;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px;font-size:14px;line-height:1.75;color:var(--text);resize:vertical;min-height:80px;font-family:inherit}
+.branch-label{font-size:12px;color:var(--text3);margin-bottom:8px}
+.branch-btns{display:flex;gap:8px;flex-wrap:wrap}
+.branch-btn{padding:8px 14px;border-radius:var(--radius);border:0.5px solid var(--border2);font-size:13px;cursor:pointer;background:transparent;color:var(--text);transition:all .15s;display:flex;align-items:center;gap:5px}
+.branch-btn:hover{background:var(--bg2)}
+.branch-btn.ok.selected{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)}
+.branch-btn.ng{border-color:#f0b0b0}
+.branch-btn.ng.selected{background:var(--danger-bg);border-color:#f0b0b0;color:var(--danger-text)}
+.branch-btn.warn.selected{background:var(--warning-bg);border-color:#e8cc80;color:var(--warning-text)}
+.tip-box{background:var(--warning-bg);border-radius:var(--radius);padding:10px 14px;font-size:13px;color:var(--warning-text);display:flex;gap:8px;align-items:flex-start;margin-bottom:12px}
+.bottom-bar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--border)}
+.nav-btn{padding:7px 16px;border-radius:var(--radius);border:0.5px solid var(--border2);font-size:13px;cursor:pointer;background:transparent;color:var(--text);display:flex;align-items:center;gap:5px;transition:all .15s}
+.nav-btn:hover{background:var(--bg2)}
+.nav-btn.primary{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text);font-weight:500}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.progress{font-size:12px;color:var(--text3)}
+.result-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--radius);font-size:12px;font-weight:500;margin-bottom:12px}
+.badge-success{background:var(--success-bg);color:var(--success-text)}
+.badge-warning{background:var(--warning-bg);color:var(--warning-text)}
+.badge-danger{background:var(--danger-bg);color:var(--danger-text)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo"><i class="ti ti-phone-call"></i></div>
+    <div class="title-block">
+      <h1>TAKUMee 架電マニュアル</h1>
+      <p>アンケート回収用スクリプト</p>
+    </div>
+  </div>
+  <div class="body">
+    <div class="mode-tabs">
+      <button class="tab active" onclick="setMode('call')" id="tab-call"><i class="ti ti-phone"></i> 架電モード</button>
+      <button class="tab" onclick="setMode('role')" id="tab-role"><i class="ti ti-user"></i> ロープレモード</button>
+      <button class="tab" onclick="setMode('edit')" id="tab-edit"><i class="ti ti-edit"></i> 編集モード</button>
+    </div>
+
+    <div id="mode-call">
+      <div class="step-nav" id="step-nav"></div>
+      <div id="step-content"></div>
+      <div class="bottom-bar">
+        <button class="nav-btn" id="btn-back" onclick="goBack()"><i class="ti ti-arrow-left"></i> 戻る</button>
+        <span class="progress" id="progress-txt"></span>
+        <button class="nav-btn primary" id="btn-reset" onclick="resetFlow()" style="display:none"><i class="ti ti-refresh"></i> 最初から</button>
+      </div>
+    </div>
+
+    <div id="mode-role" class="hidden">
+      <div class="card">
+        <div class="card-label"><i class="ti ti-user"></i> ロープレシナリオ</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="scenario-btns"></div>
+        <div id="role-content"></div>
+      </div>
+    </div>
+
+    <div id="mode-edit" class="hidden">
+      <div class="card">
+        <div class="card-label"><i class="ti ti-edit"></i> スクリプト編集</div>
+        <p style="font-size:13px;color:var(--text3);margin-bottom:14px">各ステップのスクリプトを編集できます。変更は即座に架電モードに反映されます。</p>
+        <div id="edit-list"></div>
+        <button class="nav-btn primary" style="margin-top:8px" onclick="saveEdits()"><i class="ti ti-check"></i> 保存する</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const steps=[
+  {id:'open',label:'オープニング',icon:'ti-phone-incoming',script:'お世話になっております。TAKUMeeサポート担当の[氏名]と申します。\n先日、TAKUMeeをご利用いただきましたお客様にご連絡しております。\n少々お時間よろしいでしょうか？',tip:'明るく・ゆっくり・はっきりと。最初の10秒が勝負です。',branches:[{label:'はい、大丈夫です',icon:'ti-check',type:'ok',next:'confirm'},{label:'今は忙しい',icon:'ti-clock',type:'warn',next:'busy'},{label:'繋がらず / 不在',icon:'ti-phone-off',type:'ng',next:'absent'}]},
+  {id:'confirm',label:'ご利用確認',icon:'ti-clipboard-check',script:'ありがとうございます。\n[サービス利用日]頃に、TAKUMeeを通じて業者をお探しになりましたよね？\nその節はご利用いただきありがとうございました。',tip:'利用日・内容を事前に確認しておくとスムーズです。',branches:[{label:'はい、使いました',icon:'ti-check',type:'ok',next:'request'},{label:'よく覚えていない',icon:'ti-question-mark',type:'warn',next:'remind'},{label:'使っていない / 人違い',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'request',label:'アンケート依頼',icon:'ti-forms',script:'ご利用ありがとうございました。\nサービス向上のため、3〜5分ほどでお答えいただける簡単なアンケートをお願いしたいのですが、今少しよろしいでしょうか？',tip:'「3〜5分」と具体的な時間を伝えると承諾率が上がります。',branches:[{label:'いいですよ',icon:'ti-check',type:'ok',next:'survey'},{label:'後でなら',icon:'ti-calendar',type:'warn',next:'schedule'},{label:'結構です',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'survey',label:'アンケート実施',icon:'ti-star',script:'ありがとうございます！それでは早速いくつかお伺いします。\n\n※ アンケート内容は後日追加されます。\n\n【質問1】\n【質問2】\n【質問3】',tip:'相手のペースに合わせて、焦らず進めましょう。',branches:[{label:'回答完了',icon:'ti-check',type:'ok',next:'complete'},{label:'途中でNG',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'complete',label:'完了・クロージング',icon:'ti-circle-check',script:'ご協力ありがとうございました！\nいただいたご意見はサービス改善に活かしてまいります。\nまたお困りの際はぜひTAKUMeeをご利用ください。\nそれでは失礼いたします。',tip:'明るくさわやかに締めましょう。次回利用への布石になります。',branches:[],isEnd:true,result:'success'},
+  {id:'busy',label:'忙しい対応',icon:'ti-clock',script:'承知いたしました。お忙しいところ失礼いたしました。\nよろしければ、改めてご都合の良いお時間にお電話させていただいてもよろしいでしょうか？',tip:'無理に引き留めず、再架電の約束を取りましょう。',branches:[{label:'後でOK（日時確認）',icon:'ti-calendar',type:'ok',next:'schedule'},{label:'不要',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'absent',label:'不在対応',icon:'ti-phone-off',script:'（留守電・折り返し依頼の場合）\nTAKUMeeサポートの[氏名]よりお電話いたしました。\nご都合のよい際に、[電話番号]までご連絡いただけますと幸いです。',tip:'伝言は簡潔に。番号は必ず残しましょう。',branches:[],isEnd:true,result:'absent'},
+  {id:'remind',label:'利用思い出し対応',icon:'ti-bulb',script:'失礼いたしました。[利用日・内容]のタイミングで、庭の手入れや外構工事の業者紹介サービスをご利用いただいたかと思います。\nお心当たりございませんでしょうか？',tip:'具体的な情報を添えると思い出してもらいやすいです。',branches:[{label:'思い出した',icon:'ti-check',type:'ok',next:'request'},{label:'やはり違う',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'schedule',label:'日程調整',icon:'ti-calendar',script:'ありがとうございます。\nそれでは[日時]頃にまたご連絡させていただいてもよろしいでしょうか？',tip:'具体的な日時を2択で提示すると決まりやすいです。',branches:[{label:'日時確定',icon:'ti-check',type:'ok',next:'scheduled_end'},{label:'やはり不要',icon:'ti-x',type:'ng',next:'ng_end'}]},
+  {id:'scheduled_end',label:'再架電確定',icon:'ti-calendar-check',script:'ありがとうございます。では[確定日時]にご連絡いたします。\nよろしくお願いいたします。失礼いたします。',tip:'確定日時をNotionに必ず記録してください。',branches:[],isEnd:true,result:'scheduled'},
+  {id:'ng_end',label:'NG・クロージング',icon:'ti-x',script:'承知いたしました。お時間をいただきありがとうございました。\nご不便をおかけしたようでしたら申し訳ございません。\nそれでは失礼いたします。',tip:'NGでも丁寧に。印象は次の機会に繋がります。',branches:[],isEnd:true,result:'ng'},
+];
+const stepsMap={};steps.forEach(s=>stepsMap[s.id]=s);
+let history=['open'],mode='call',scripts={};
+steps.forEach(s=>scripts[s.id]=s.script);
+
+function setMode(m){
+  mode=m;
+  ['call','role','edit'].forEach(x=>{
+    document.getElementById('mode-'+x).classList.toggle('hidden',x!==m);
+    document.getElementById('tab-'+x).classList.toggle('active',x===m);
+  });
+  if(m==='edit')renderEdit();
+  if(m==='role')renderRole();
+}
+function getCurrentStep(){return stepsMap[history[history.length-1]]}
+function renderCallMode(){
+  renderStepNav();renderStepContent();
+  document.getElementById('btn-back').disabled=history.length<=1;
+  document.getElementById('btn-reset').style.display=getCurrentStep().isEnd?'flex':'none';
+  document.getElementById('progress-txt').textContent='ステップ '+history.length;
+}
+function renderStepNav(){
+  const nav=document.getElementById('step-nav');nav.innerHTML='';
+  history.forEach((id,i)=>{
+    if(i>0){const l=document.createElement('div');l.className='step-line';nav.appendChild(l);}
+    const d=document.createElement('div');
+    d.className='step-dot '+(i===history.length-1?'active':'done');
+    d.innerHTML=`<i class="ti ${stepsMap[id].icon}" style="font-size:13px"></i>`;
+    d.title=stepsMap[id].label;nav.appendChild(d);
+  });
+}
+function renderStepContent(){
+  const step=getCurrentStep();const c=document.getElementById('step-content');
+  let badge='';
+  if(step.isEnd){
+    if(step.result==='success')badge='<div class="result-badge badge-success"><i class="ti ti-circle-check"></i> アンケート回収完了</div>';
+    else if(step.result==='absent')badge='<div class="result-badge badge-warning"><i class="ti ti-phone-off"></i> 不在 — 再架電登録</div>';
+    else if(step.result==='scheduled')badge='<div class="result-badge badge-warning"><i class="ti ti-calendar"></i> 再架電確定</div>';
+    else badge='<div class="result-badge badge-danger"><i class="ti ti-x"></i> NG — クロージング完了</div>';
+  }
+  let branchHTML='';
+  if(step.branches.length>0){
+    branchHTML=`<div class="branch-label">相手の反応を選んでください</div><div class="branch-btns">
+      ${step.branches.map(b=>`<button class="branch-btn ${b.type}" onclick="selectBranch('${b.next}')"><i class="ti ${b.icon}"></i>${b.label}</button>`).join('')}
+    </div>`;
+  }
+  c.innerHTML=`<div class="card">${badge}
+    <div class="card-label"><i class="ti ${step.icon}" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>${step.label}</div>
+    <div class="script-box">${(scripts[step.id]||step.script).replace(/\n/g,'<br>')}</div>
+    ${step.tip?`<div class="tip-box"><i class="ti ti-bulb" style="font-size:16px;flex-shrink:0;margin-top:1px"></i><span>${step.tip}</span></div>`:''}
+    ${branchHTML}</div>`;
+}
+function selectBranch(nextId){history.push(nextId);renderCallMode();}
+function goBack(){if(history.length>1){history.pop();renderCallMode();}}
+function resetFlow(){history=['open'];renderCallMode();}
+
+const scenarios=[
+  {label:'順調パターン',path:['open','confirm','request','survey','complete']},
+  {label:'忙しい→再架電',path:['open','busy','schedule','scheduled_end']},
+  {label:'不在パターン',path:['open','absent']},
+  {label:'利用忘れ→回収',path:['open','confirm','remind','request','survey','complete']},
+  {label:'NGパターン',path:['open','confirm','request','ng_end']},
+];
+let roleIdx=0,roleStep=0;
+function renderRole(){
+  document.getElementById('scenario-btns').innerHTML=scenarios.map((s,i)=>`<button class="branch-btn ${i===roleIdx?'ok selected':''}" onclick="setScenario(${i})">${s.label}</button>`).join('');
+  renderRoleContent();
+}
+function setScenario(i){roleIdx=i;roleStep=0;renderRole();}
+function renderRoleContent(){
+  const sc=scenarios[roleIdx];const total=sc.path.length;
+  let html='';
+  sc.path.forEach((id,i)=>{
+    const step=stepsMap[id];const active=i===roleStep;const done=i<roleStep;
+    html+=`<div style="display:flex;gap:10px;margin-bottom:12px;opacity:${done?0.5:active?1:0.35}">
+      <div style="width:24px;height:24px;border-radius:50%;background:${done?'var(--success-bg)':active?'var(--info-bg)':'var(--bg2)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
+        <i class="ti ${done?'ti-check':step.icon}" style="font-size:12px;color:${done?'var(--success-text)':active?'var(--info-text)':'var(--text3)'}"></i>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px">${step.label}</div>
+        ${active?`<div class="script-box">${(scripts[id]||step.script).replace(/\n/g,'<br>')}</div>`:''}
+      </div></div>`;
+  });
+  const isLast=roleStep>=total-1;
+  html+=`<div style="display:flex;gap:8px;margin-top:4px">
+    <button class="nav-btn" onclick="rolePrev()" ${roleStep===0?'disabled':''}><i class="ti ti-arrow-left"></i> 前へ</button>
+    ${isLast?`<button class="nav-btn primary" onclick="setScenario(roleIdx)"><i class="ti ti-refresh"></i> もう一度</button>`:`<button class="nav-btn primary" onclick="roleNext()">次へ <i class="ti ti-arrow-right"></i></button>`}
+  </div>`;
+  document.getElementById('role-content').innerHTML=html;
+}
+function roleNext(){if(roleStep<scenarios[roleIdx].path.length-1){roleStep++;renderRoleContent();}}
+function rolePrev(){if(roleStep>0){roleStep--;renderRoleContent();}}
+function renderEdit(){
+  document.getElementById('edit-list').innerHTML=steps.map(s=>`
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:4px"><i class="ti ${s.icon}" style="font-size:13px;vertical-align:-2px;margin-right:4px"></i>${s.label}</div>
+      <textarea class="script-edit" id="edit-${s.id}" rows="3">${scripts[s.id]||s.script}</textarea>
+    </div>`).join('');
+}
+function saveEdits(){
+  steps.forEach(s=>{const el=document.getElementById('edit-'+s.id);if(el)scripts[s.id]=el.value;});
+  alert('保存しました。架電モードに反映されています。');
+}
+renderCallMode();
+</script>
+</body>
+</html>
